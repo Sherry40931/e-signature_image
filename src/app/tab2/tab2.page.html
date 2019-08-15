@@ -1,9 +1,29 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Two
+      e-signature
     </ion-title>
   </ion-toolbar>
 </ion-header>
+ 
+<ion-content>
+  <ion-row [ngClass]="{'drawing-active': isDrawing}">
+    <ion-col></ion-col>
+    <ion-col>
+      <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
+    </ion-col>
+    <ion-col></ion-col>
+ 
+  </ion-row>
+  <ion-button ion-button full color="danger" (click)="clearPad()">Clear</ion-button>
+  <ion-button ion-button full color="secondary" (click)="savePad()">Save</ion-button>
 
-<ion-content></ion-content>
+<!--   <ion-row>
+    <ion-col></ion-col>
+    <ion-col>
+      <img [src]="signature"/>
+    </ion-col>
+    <ion-col></ion-col>
+  </ion-row> -->
+ 
+</ion-content>

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      In Downloads folder
+      選擇圖片
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -32,7 +32,7 @@
     Go up
   </button> -->
 
-  <div *ngFor="let item of items">
+  <!-- <div *ngFor="let item of items">
 
     <div *ngIf="item.isDirectory" (click)="goDown(item)">
       Directory: {{item.name}}
@@ -42,5 +42,38 @@
       <ion-button style="text-transform: none;" expand="full" (click)="openLocalPdf(item.name)">File: {{item.name}}</ion-button>
     </div>
 
-  </div>
+  </div> -->
+  
+  <!-- <ion-grid>
+    <ion-row>
+      <ion-col text-center>
+        <h3>Image Picker</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <ion-button (click)="getImages()">Choose Images</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        
+        <div class="images">
+          <div class="one-image" *ngFor="let img of imageResponse">
+            <img src="{{img}}" alt="" srcset="">
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="takePicture()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+      <!-- <ion-button ion-button full color="secondary" (click)="showpicture()">show</ion-button> -->
+  </ion-fab>
+
+  <img [src]="currentImage" *ngIf="currentImage">
+
 </ion-content>

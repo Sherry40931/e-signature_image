@@ -19,6 +19,12 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
+
+import { Camera } from '@ionic-native/camera/ngx';
+
+import {WebView} from '@ionic-native/ionic-webview/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -31,11 +37,14 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    Camera,
     File,
     FileOpener,
     FileTransfer,
     DocumentViewer,
-    ScreenOrientation
+    ScreenOrientation,
+    ImagePicker,
+    WebView
   ],
   bootstrap: [AppComponent]
 })

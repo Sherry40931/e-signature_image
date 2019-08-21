@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { Storage } from '@ionic/storage';
-// import { mergeImages } from 'merge-images';
-
+import { File } from '@ionic-native/File/ngx';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab3',
@@ -14,7 +14,9 @@ export class Tab3Page {
   pics = '';
 
   constructor(private screenOrientation: ScreenOrientation,
-              public storage: Storage) {
+              public storage: Storage,
+              public file: File,
+              public platform: Platform) {
    }
 
   ionViewWillEnter() {
@@ -33,15 +35,48 @@ export class Tab3Page {
     });
   }
 
-  // mergeImages([
-  //     { src: 'currentPDF.jpg', x: 0, y: 0 },
-  //     { src: this.signature, x: 32, y: 0 },
-  //     { src: 'mouth.png', x: 16, y: 0 }
-  // ])
-  //     .then((data) => {
-  //         this.pics = data;
-  //     });
+  saveBase64():Promise<string>{
+    return new Promise((resolve, reject)=>{
+      // console.log(this.signature)
+      var realData = this.signature.split(",")[1]
+      let blob=this.b64toBlob(realData, 'image/jpeg')
+      let path = this.file.externalRootDirectory;
+      if (this.platform.is('ios')){
+        path = this.file.documentsDirectory;
+      }
+      let name = new Date().getTime() + '.jpg';
 
-  // mergeImages(['/body.png', '/eyes.png', '/mouth.png'])
-  // .then(b64 => document.querySelector('img').src = b64);
+      this.file.writeFile(path, name, blob)
+      .then(()=>{
+        resolve(path+name);
+      })
+      .catch((err)=>{
+        console.log('error writing blob')
+        reject(err)
+      })
+    })
+  }
+
+  b64toBlob(b64Data, contentType) {
+    contentType = contentType || '';
+    var sliceSize = 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        var byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        var byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, {type: contentType});
+    return blob;
+  }
 }

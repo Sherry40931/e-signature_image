@@ -1,11 +1,13 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Tab Three
+      儲存圖片
+      <ion-button ion-button full color="secondary" (click)="saveBase64()">儲存</ion-button>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
   <img [src]="signature"/>
+
 </ion-content>

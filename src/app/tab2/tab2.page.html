@@ -1,29 +1,19 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      e-signature
+      簽名板
+       <ion-button ion-button full color="danger" (click)="clearPad()">清除</ion-button>
+       <ion-button ion-button full color="secondary" (click)="savePad()">儲存</ion-button>
     </ion-title>
   </ion-toolbar>
 </ion-header>
  
-<ion-content>
+<ion-content padding>
   <ion-row [ngClass]="{'drawing-active': isDrawing}">
-    <ion-col></ion-col>
-    <ion-col>
+    <!-- <ion-col> -->
       <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()"></signature-pad>
-    </ion-col>
-    <ion-col></ion-col>
+    <!-- </ion-col> -->
  
   </ion-row>
-  <ion-button ion-button full color="danger" (click)="clearPad()">Clear</ion-button>
-  <ion-button ion-button full color="secondary" (click)="savePad()">Save</ion-button>
-
-<!--   <ion-row>
-    <ion-col></ion-col>
-    <ion-col>
-      <img [src]="signature"/>
-    </ion-col>
-    <ion-col></ion-col>
-  </ion-row> -->
  
 </ion-content>

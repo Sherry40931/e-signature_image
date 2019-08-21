@@ -3,7 +3,6 @@ import { NavController, Platform } from '@ionic/angular';
 import { SignaturePad } from 'angular2-signaturepad/signature-pad';
 import { Storage } from '@ionic/storage';
 import { ToastController } from '@ionic/angular';
-// import { NativeStorage } from '@ionic-native/native-storage';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @Component({
@@ -15,6 +14,9 @@ export class Tab2Page {
 
   signature = '';
   isDrawing = false;
+  photo = '';
+  w = 0;
+  h = 0;
 
   constructor(public navController: NavController, 
               public storage: Storage, 
@@ -29,25 +31,37 @@ export class Tab2Page {
   @ViewChild(SignaturePad, {static: true}) signaturePad: SignaturePad;
   public signaturePadOptions: Object = { // Check out https://github.com/szimek/signature_pad
     'minWidth': 1,
-    'canvasWidth': this.platform.width(),//400,
-    'canvasHeight': this.platform.height()-200,//200,
-    'backgroundColor': '#f6fbff'
+    'canvasWidth': window.innerWidth*0.9,//this.platform.width(),//400,
+    'canvasHeight': window.innerHeight*0.9,//this.platform.height(),//200,
+    'backgroundColor': '#ffffff'
   };
 
   ngAfterViewInit() {
     // this.signaturePad is now available
     this.signaturePad.set('minWidth', 1); // set szimek/signature_pad options at runtime
     this.signaturePad.clear(); // invoke functions from szimek/signature_pad API
-    this.signaturePad.fromDataURL('assets/imgs/test.jpg');
+
+    // this.storage.get('choosePic').then((data) => {
+    //   this.signaturePad.fromDataURL(data);
+    // });
+    // this.signaturePad.fromDataURL(this.photo);//this.photo);
     this.storage.get('savedSignature').then((data) => {
       this.signature = data;
     });
-
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     // this.screenOrientation.unlock();
     // this.screenOrientation.lock('landscape-primary');
+    // this.storage.get('choosePic').then((data) => {
+    //   this.signaturePad.fromDataURL(data);
+    // });
+    // this.signaturePad.fromDataURL(this.photo);
+    this.storage.get('choosePic').then((data) => {
+      if(data != null){
+        this.signaturePad.fromDataURL(data);
+      }
+    });
   }
  
   drawComplete() {
@@ -59,9 +73,9 @@ export class Tab2Page {
   }
  
   savePad() {
-    this.signature = this.signaturePad.toDataURL();
+    this.signature = this.signaturePad.toDataURL("image/jpeg");
     this.storage.set('savedSignature', this.signature);
-    this.signaturePad.clear();
+    // this.signaturePad.clear();
     // let toast = this.toastCtrl.create({
     //   message: 'New Signature saved.',
     //   duration: 3000
@@ -70,6 +84,13 @@ export class Tab2Page {
  
   clearPad() {
     this.signaturePad.clear();
+    this.storage.get('choosePic').then((data) => {
+      if(data != null){
+        this.signaturePad.fromDataURL(data);
+      }
+    });
+    // this.signaturePad.fromDataURL(this.photo);
+    // console.log(this.photo)
   }
 
 }

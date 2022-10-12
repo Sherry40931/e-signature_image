@@ -50,7 +50,7 @@
     "cordova-sqlite-storage": "3.2.1",
     "core-js": "^2.5.4",
     "es6-promise-plugin": "^4.2.2",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.5.1",
     "merge-images": "^1.1.0",
     "pdfmake": "^0.1.58",
     "rxjs": "~6.5.1",
